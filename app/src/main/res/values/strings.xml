@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDb</string>
+    <string name="app_name">Popular Movies</string>
     <string name="no_movies">No Movies</string>
     <string name="no_connection">No Internet Connection</string>
     <string name="url_for_downloading_poster">http://image.tmdb.org/t/p/w342</string>

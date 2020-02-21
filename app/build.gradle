@@ -21,6 +21,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'THE_MOVIE_DATABASE_API_KEY', "\"d7996719a1124cf1b014419a8d8940e7\""
+    }
 }
 
 ext {
