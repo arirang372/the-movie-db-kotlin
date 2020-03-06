@@ -10,11 +10,13 @@ data class Movie(
     var vote_average: String?,
     var poster_path: String?,
     var overview: String?,
+    var title: String?,
     var release_date: String?,
     var backdrop_path: String?
 ) : Parcelable, BaseModel() {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -27,6 +29,7 @@ data class Movie(
         parcel.writeString(vote_average)
         parcel.writeString(poster_path)
         parcel.writeString(overview)
+        parcel.writeString(title)
         parcel.writeString(release_date)
         parcel.writeString(backdrop_path)
     }

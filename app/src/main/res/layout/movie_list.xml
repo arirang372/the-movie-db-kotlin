@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.john.themoviedb.search.viewmodel.SearchMoviesViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".search.view.SearchMoviesActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movie_list"
@@ -13,7 +23,9 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbars="vertical"
+            android:visibility="@{viewModel.dataLoading? View.INVISIBLE : View.VISIBLE}"
             app:layoutManager="LinearLayoutManager"
+            app:movies="@{viewModel.movies}"
             tools:listitem="@layout/movie_list_content">
 
         </androidx.recyclerview.widget.RecyclerView>

@@ -15,7 +15,6 @@
     <dimen name="trailer_width_for_detail">150dp</dimen>
     <dimen name="trailer_height_for_detail">100dp</dimen>
     <integer name="grid_number_cols">2</integer>
-
     <dimen name="button_height">36dp</dimen>
     <dimen name="trailer_vertical_margin">16dp</dimen>
     <dimen name="review_vertical_margin">16dp</dimen>

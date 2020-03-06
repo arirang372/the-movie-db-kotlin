@@ -32,8 +32,8 @@ class RemoteDataLoader {
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/"
-        private const val POSTER_IMAGE_URL_BASE = "http://image.tmdb.org/t/p/w342/%s"
-        private const val BACK_DROP_IMAGE_URL_BASE = "http://image.tmdb.org/t/p/original"
+        private const val POSTER_IMAGE_URL_BASE = "http://image.tmdb.org/t/p/w342%s"
+        private const val BACK_DROP_IMAGE_URL_BASE = "http://image.tmdb.org/t/p/original%s"
         private const val YOUTUBE_TRAILER_URL_BASE = "http://www.youtube.com/watch?v="
     }
 
@@ -41,7 +41,7 @@ class RemoteDataLoader {
         sortBy: String,
         callback: DataSource.LoadMoviesCallback,
         observableList: ObservableList<Movie>
-    ): ObservableList<Movie> {
+    ) {
         service.getMovies(sortBy, BuildConfig.THE_MOVIE_DATABASE_API_KEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -58,14 +58,12 @@ class RemoteDataLoader {
                 override fun onSubscribe(d: Disposable) {
                 }
 
-                override fun onNext(photos: MutableList<Movie>) {
+                override fun onNext(movies: MutableList<Movie>) {
                     observableList.clear()
-                    observableList.addAll(photos)
+                    observableList.addAll(movies)
                     callback.onMoviesLoaded()
                 }
             })
-
-        return observableList
     }
 
     private fun getConvertedReleaseDate(movieReleaseDate: String?): String {

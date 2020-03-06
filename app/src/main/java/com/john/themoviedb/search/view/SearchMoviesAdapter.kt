@@ -41,16 +41,15 @@ class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         var binding: MovieListContentBinding =
             MovieListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        var view = binding.root
-        var gridNumberOfColumns = parent.context.resources.getInteger(R.integer.grid_number_cols)
-        view.layoutParams.height = parent.width / gridNumberOfColumns * 1.5f as Int
+//        var view = binding.root
+//        var gridNumberOfColumns = parent.context.resources.getInteger(R.integer.grid_number_cols)
+//        view.layoutParams.height = parent.width / gridNumberOfColumns * 1.5f as Int
         return MovieViewHolder(binding)
     }
 
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieListItemBinding.model = movies[position]
-
         holder.movieListItemBinding.executePendingBindings()
     }
 
@@ -59,9 +58,10 @@ class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
         holder.cleanUp()
     }
 
-    fun setMovies(movies: MutableList<Movie>) {
-        this.movies = movies
-        notifyDataSetChanged()
+    fun setMovies(movies: MutableList<Movie>?) {
+        movies?.let {
+            this.movies = it
+            notifyDataSetChanged()
+        }
     }
-
 }
