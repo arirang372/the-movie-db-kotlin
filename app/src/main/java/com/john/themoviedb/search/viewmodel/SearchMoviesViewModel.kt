@@ -23,10 +23,11 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     }
 
     override fun onMovieNotAvailable() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setDataLoading(false)
     }
 
     fun loadAllMovies(sortBy: String) {
+        setDataLoading(true)
         mRepository.loadAllMovies(sortBy, this, movies)
     }
 }
