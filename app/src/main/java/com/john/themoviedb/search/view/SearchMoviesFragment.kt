@@ -14,14 +14,14 @@ import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 class SearchMoviesFragment : Fragment() {
     private lateinit var searchMoviesFragmentBinding: FragmentSearchMoviesBinding
     private var viewModel: SearchMoviesViewModel? = null
-    var sortBy: String = MovieConstants.SortBy.MOST_POPULAR
     private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = activity?.let {
             SearchMoviesActivity.obtainViewModel(it)
         }
-        viewModel?.loadAllMovies(sortBy = sortBy)
+        viewModel?.loadAllMovies(R.id.sort_by_popular)
     }
 
     override fun onCreateView(
@@ -48,7 +48,7 @@ class SearchMoviesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_activity, menu)
-        when (sortBy) {
+        when (viewModel?.sortByField?.get()) {
             MovieConstants.SortBy.MOST_POPULAR ->
                 menu?.let { it.findItem(R.id.sort_by_popular).setCheckable(true) }
 
@@ -61,12 +61,7 @@ class SearchMoviesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.sort_by_popular -> {
-
-            }
-        }
-
+        viewModel?.loadAllMovies(item.itemId)
         return true
     }
 }
