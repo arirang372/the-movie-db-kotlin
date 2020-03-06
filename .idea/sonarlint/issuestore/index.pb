@@ -9,3 +9,17 @@ y
 Iapp/src/main/java/com/john/themoviedb/search/view/SearchMoviesFragment.kt,3\4\34edcdee5a79289977262c60d336b91af3ee7ecd
 x
 Happ/src/main/java/com/john/themoviedb/search/view/SearchMoviesAdapter.kt,c\0\c05e8e8bc1cd10dd777aee1ac344b88e60469ff9
+h
+8app/src/main/java/com/john/themoviedb/SingleLiveEvent.kt,a\9\a9822d559158204da497d472268cd20df119a540
+x
+Happ/src/main/java/com/john/themoviedb/data/source/remote/MovieService.kt,9\a\9a789d9fa3b8560aab22be2793f82c27c3f6a6e5
+Å
+Qapp/src/main/java/com/john/themoviedb/data/source/remote/model/BaseApiResponse.kt,6\2\62f3f6033a1ffe9dc363628d925639491970fbc4
+y
+Iapp/src/main/java/com/john/themoviedb/search/view/SearchMoviesActivity.kt,e\4\e4d741e4f66185a55730d5b3e2edf6b4f7f63a6b
+{
+Kapp/src/main/java/com/john/themoviedb/search/SearchMoviesBindingAdapters.kt,0\2\02eb4bdb6e995f52808e0a807a5728b2ac2c611b
+
+Oapp/src/main/java/com/john/themoviedb/search/viewmodel/SearchMoviesViewModel.kt,e\2\e2ce3d2537a6f6477ccbfc7777f3f2151386e57d
+k
+;app/src/main/java/com/john/themoviedb/search/model/Movie.kt,4\c\4cd31cc146dbe02d69cb73e5de7284af05cee73f

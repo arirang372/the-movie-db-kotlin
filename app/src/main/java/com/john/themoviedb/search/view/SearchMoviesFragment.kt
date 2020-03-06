@@ -1,6 +1,5 @@
 package com.john.themoviedb.search.view
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -42,18 +41,8 @@ class SearchMoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchMoviesFragmentBinding.viewModel = viewModel
         recyclerView = view.findViewById(R.id.movie_list)
-        //var gridMargin: Int = resources.getDimensionPixelOffset(R.dimen.grid_number_cols)
-        recyclerView.layoutManager = GridLayoutManager(activity, getResources().getInteger(R.integer.grid_number_cols))
-//        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-////            override fun getItemOffsets(
-////                outRect: Rect,
-////                view: View,
-////                parent: RecyclerView,
-////                state: RecyclerView.State
-////            ) {
-////                outRect.set(gridMargin, gridMargin, gridMargin, gridMargin)
-////            }
-////        })
+        recyclerView.layoutManager =
+            GridLayoutManager(activity, resources.getInteger(R.integer.grid_number_cols))
         recyclerView.adapter = viewModel?.let { SearchMoviesAdapter(it) }
     }
 
