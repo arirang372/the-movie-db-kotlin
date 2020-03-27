@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.john.themoviedb.R
 import com.john.themoviedb.databinding.MovieListContentBinding
+import com.john.themoviedb.search.callbacks.MovieItemListener
 import com.john.themoviedb.search.model.Movie
 import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 import com.squareup.picasso.Picasso
@@ -50,6 +51,11 @@ class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieListItemBinding.model = movies[position]
+        holder.movieListItemBinding.callback = object : MovieItemListener{
+            override fun onItemClicked(movie: Movie) {
+
+            }
+        }
         holder.movieListItemBinding.executePendingBindings()
     }
 

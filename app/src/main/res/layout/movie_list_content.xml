@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="callback"
+            type="com.john.themoviedb.search.callbacks.MovieItemListener" />
+
+        <variable
             name="model"
             type="com.john.themoviedb.search.model.Movie" />
 
@@ -27,6 +31,7 @@
             android:id="@+id/thumbnail_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{()->callback.onItemClicked(model)}"
             android:scaleType="fitXY"
             android:src="@{model.poster_path}" />
 
