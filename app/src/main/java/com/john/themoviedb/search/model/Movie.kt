@@ -2,7 +2,6 @@ package com.john.themoviedb.search.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.john.themoviedb.data.source.remote.model.BaseModel
 
 
 data class Movie(
@@ -13,7 +12,7 @@ data class Movie(
     var title: String?,
     var release_date: String?,
     var backdrop_path: String?
-) : Parcelable, BaseModel() {
+) : Parcelable, Comparable<Movie> {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readString(),
@@ -46,6 +45,10 @@ data class Movie(
         override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun compareTo(other: Movie): Int {
+        return 0
     }
 }
 

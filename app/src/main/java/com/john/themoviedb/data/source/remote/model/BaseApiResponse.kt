@@ -2,7 +2,7 @@ package com.john.themoviedb.data.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-open class BaseApiResponse<T : BaseModel> {
+open class BaseApiResponse<T : Comparable<T>> {
     @SerializedName("results")
     lateinit var results: MutableList<T>
 
@@ -13,5 +13,5 @@ open class BaseApiResponse<T : BaseModel> {
     var totalResults: Int = 0
 
     @SerializedName("page")
-    var page : Int = 0
+    var page: Int = 0
 }

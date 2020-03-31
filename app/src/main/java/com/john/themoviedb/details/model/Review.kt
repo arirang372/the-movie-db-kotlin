@@ -2,10 +2,9 @@ package com.john.themoviedb.details.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.john.themoviedb.data.source.remote.model.BaseModel
 
 data class Review(var author: String?, var content: String?, var id: String?, var url: String?) :
-    Parcelable, BaseModel() {
+    Parcelable, Comparable<Review> {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -32,5 +31,9 @@ data class Review(var author: String?, var content: String?, var id: String?, va
         override fun newArray(size: Int): Array<Review?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun compareTo(other: Review): Int {
+        return 0
     }
 }

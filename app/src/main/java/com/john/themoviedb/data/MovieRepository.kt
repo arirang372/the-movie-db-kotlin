@@ -15,4 +15,12 @@ class MovieRepository {
     ) {
         dataLoader.loadAllMovies(sortBy, callback, observableList)
     }
+
+    fun loadReviewsAndTrailers(
+        movieId: Long,
+        callback: DataSource.LoadReviewsTrailersCallback,
+        observableList: ObservableList<Comparable<*>>
+    ) {
+        dataLoader.loadReviewsAndTrailers(movieId, callback, observableList)
+    }
 }
