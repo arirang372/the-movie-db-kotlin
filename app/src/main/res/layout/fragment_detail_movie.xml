@@ -1,94 +1,108 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context="com.jogoler.android.tmdb.fragment.DetailMovieFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="model"
+            type="com.john.themoviedb.search.model.Movie" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        tools:context=".DetailMovieActivity">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context="com.john.themoviedb.details.view.DetailMovieFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <ImageView
-                android:id="@+id/poster_movie_image_view"
-                android:layout_width="@dimen/movie_poster_width_for_detail"
-                android:layout_height="@dimen/movie_poster_height_for_detail"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
-                android:scaleType="fitXY" />
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            tools:context=".DetailMovieActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-                <TextView
-                    android:id="@+id/title_movie_text_view"
-                    style="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/poster_movie_image_view"
+                    android:layout_width="@dimen/movie_poster_width_for_detail"
+                    android:layout_height="@dimen/movie_poster_height_for_detail"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@{model.poster_path}"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="4dp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
 
-                <include layout="@layout/rating" />
+                    <TextView
+                        android:id="@+id/title_movie_text_view"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:paddingBottom="4dp"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:text="@{model.title}"/>
 
-                <include layout="@layout/favorite" />
+                    <include layout="@layout/rating" />
 
-                <TextView
-                    android:id="@+id/movie_user_rating_text_view"
-                    style="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textIsSelectable="true"
-                    tools:text="TMDB = 6.8/10" />
+                    <include layout="@layout/favorite" />
 
-                <TextView
-                    android:id="@+id/movie_release_date_text_view"
-                    style="?android:attr/textAppearanceMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:textColor="@android:color/black"
-                    android:textIsSelectable="true"
-                    tools:text="20 August 2017" />
+                    <TextView
+                        android:id="@+id/movie_user_rating_text_view"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textIsSelectable="true"
+                        android:text="@{model.vote_average}"
+                        tools:text="TMDB = 6.8/10" />
 
+                    <TextView
+                        android:id="@+id/movie_release_date_text_view"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:textColor="@android:color/black"
+                        android:textIsSelectable="true"
+                        android:text="@{model.release_date}"
+                        tools:text="20 August 2017" />
+
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/movie_overview_text_view"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="16dp"
+                android:textAlignment="inherit"
+                android:text="@{model.overview}"
+                android:textColor="@android:color/black" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_item_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/trailer_vertical_margin"
+                tools:listitem="@layout/trailer_list_content">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/movie_overview_text_view"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:maxLines="3"
-            android:textAlignment="inherit"
-            android:textColor="@android:color/black" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_item_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/trailer_vertical_margin"
-            tools:listitem="@layout/trailer_list_content">
-
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>

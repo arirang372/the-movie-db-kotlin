@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.john.themoviedb.R
 import com.john.themoviedb.ViewModelFactory
@@ -30,6 +31,14 @@ class SearchMoviesActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .add(R.id.movie_main_container, SearchMoviesFragment())
             .commit()
+
+        observeLiveData()
         searchMoviesActivityBinding.executePendingBindings()
+    }
+
+    fun observeLiveData() {
+        viewModel.getOpenTaskEvent().observe(this, Observer {
+
+        })
     }
 }

@@ -2,7 +2,7 @@ package com.john.themoviedb.data.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-open class BaseApiResponse<T> {
+open class BaseApiResponse<T : BaseModel> {
     @SerializedName("results")
     lateinit var results: MutableList<T>
 

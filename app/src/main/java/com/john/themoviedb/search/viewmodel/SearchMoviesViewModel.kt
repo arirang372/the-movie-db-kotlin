@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
 import com.john.themoviedb.R
+import com.john.themoviedb.SingleLiveEvent
 import com.john.themoviedb.data.MovieConstants
 import com.john.themoviedb.data.MovieRepository
 import com.john.themoviedb.data.source.DataSource
@@ -18,6 +19,7 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
     val movies: ObservableList<Movie> = ObservableArrayList<Movie>()
     val sortByField = ObservableField<String>()
+    private val openTaskEvent = SingleLiveEvent<Unit>()
 
     init {
         sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
@@ -49,6 +51,14 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
             setDataLoading(true)
             mRepository.loadAllMovies(sortByField.get()!!, this, movies)
         }
+    }
+
+    fun openDetailMoviePage() {
+
+    }
+
+    fun getOpenTaskEvent(): SingleLiveEvent<Unit> {
+        return openTaskEvent
     }
 }
 
