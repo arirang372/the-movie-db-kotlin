@@ -8,7 +8,7 @@ open abstract class MultitypeDataBoundAdapter<T : ViewDataBinding> : BaseDataBou
     private val mItems = mutableListOf<Any>()
 
     override fun bindItem(holder: DataBoundViewHolder<T>, position: Int) {
-        holder.binding.setVariable(BR.data, mItems[position])
+        holder.binding.setVariable(BR.model, mItems[position])
     }
 
     override fun getItemCount(): Int {
