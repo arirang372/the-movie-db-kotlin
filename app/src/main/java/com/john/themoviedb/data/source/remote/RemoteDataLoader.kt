@@ -144,6 +144,8 @@ class RemoteDataLoader {
             m.poster_path = String.format(POSTER_IMAGE_URL_BASE, m.poster_path)
             m.backdrop_path = String.format(BACK_DROP_IMAGE_URL_BASE, m.backdrop_path)
             m.release_date = getConvertedReleaseDate(m.release_date)
+            m.rating = m.vote_average?.let{it.toFloat()}!!
+            m.rating = m.rating / 2
         }
         return movies
     }

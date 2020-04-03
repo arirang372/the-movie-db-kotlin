@@ -67,7 +67,14 @@
                             android:textColor="@android:color/black"
                             android:textStyle="bold" />
 
-                        <include layout="@layout/rating" />
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:rating="@{model.rating}"
+                            android:stepSize="0.1" />
 
                         <include layout="@layout/favorite" />
 
@@ -76,7 +83,7 @@
                             style="?android:attr/textAppearanceMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.vote_average}"
+                            android:text="@{@string/vote_average_text(model.vote_average)}"
                             android:textColor="@android:color/black"
                             android:textIsSelectable="true"
                             tools:text="TMDB = 6.8/10" />

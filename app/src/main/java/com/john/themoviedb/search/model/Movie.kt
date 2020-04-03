@@ -7,6 +7,7 @@ import android.os.Parcelable
 data class Movie(
     var id: Long,
     var vote_average: String?,
+    var rating: Float,
     var poster_path: String?,
     var overview: String?,
     var title: String?,
@@ -16,6 +17,7 @@ data class Movie(
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readString(),
+        parcel.readFloat(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -26,6 +28,7 @@ data class Movie(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(id)
         parcel.writeString(vote_average)
+        parcel.writeFloat(rating)
         parcel.writeString(poster_path)
         parcel.writeString(overview)
         parcel.writeString(title)
