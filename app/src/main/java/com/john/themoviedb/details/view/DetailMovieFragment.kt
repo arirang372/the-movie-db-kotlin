@@ -55,7 +55,7 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
         detailMovieFragmentBinding.viewModel = viewModel
         var recyclerView =
             detailMovieFragmentBinding.root.findViewById<RecyclerView>(R.id.list_item_recycler_view)
-        recyclerView.adapter = DetailMovieAdapter(this, this, viewModel)
+        recyclerView.adapter = DetailMovieAdapter(this, this)
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return detailMovieFragmentBinding.root

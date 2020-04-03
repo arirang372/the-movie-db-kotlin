@@ -3,7 +3,6 @@ package com.john.themoviedb.details.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.john.themoviedb.details.view.viewholders.BaseViewHolder
 import com.john.themoviedb.databinding.ReviewListContentBinding
 import com.john.themoviedb.databinding.TitleListContentBinding
 import com.john.themoviedb.databinding.TrailerListContentBinding
@@ -12,21 +11,19 @@ import com.john.themoviedb.details.callbacks.MovieTrailerItemListener
 import com.john.themoviedb.details.model.Category
 import com.john.themoviedb.details.model.Review
 import com.john.themoviedb.details.model.Trailer
+import com.john.themoviedb.details.view.viewholders.BaseViewHolder
 import com.john.themoviedb.details.view.viewholders.ReviewViewHolder
 import com.john.themoviedb.details.view.viewholders.TitleViewHolder
 import com.john.themoviedb.details.view.viewholders.TrailerViewHolder
-import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 import java.util.*
 
 
 class DetailMovieAdapter(
     trailerCallback: MovieTrailerItemListener,
-    reviewCallback: MovieReviewItemListener,
-    viewModel: DetailMovieViewModel
+    reviewCallback: MovieReviewItemListener
 ) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var trailersReviews: MutableList<Comparable<*>> = Collections.emptyList()
-    private var viewModel: DetailMovieViewModel = viewModel
     private var mTrailerCallback: MovieTrailerItemListener = trailerCallback
     private var mReviewCallback: MovieReviewItemListener = reviewCallback
 
