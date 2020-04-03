@@ -1,6 +1,5 @@
-package com.john.themoviedb.details.view
+package com.john.themoviedb.details.view.viewholders
 
-import com.john.themoviedb.common.BaseViewHolder
 import com.john.themoviedb.databinding.TrailerListContentBinding
 import com.john.themoviedb.details.callbacks.MovieTrailerItemListener
 import com.john.themoviedb.details.model.Trailer

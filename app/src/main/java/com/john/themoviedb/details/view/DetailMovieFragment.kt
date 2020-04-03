@@ -62,7 +62,7 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
     }
 
     override fun onTrailerItemClicked(trailer: Trailer) {
-        trailer.key?.let { openUri(it) }
+        trailer.trailerVideoUrl?.let { openUri(it) }
     }
 
     override fun onReviewClicked(review: Review) {

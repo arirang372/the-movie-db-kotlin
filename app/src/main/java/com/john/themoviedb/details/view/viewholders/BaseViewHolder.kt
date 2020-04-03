@@ -1,4 +1,4 @@
-package com.john.themoviedb.common
+package com.john.themoviedb.details.view.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

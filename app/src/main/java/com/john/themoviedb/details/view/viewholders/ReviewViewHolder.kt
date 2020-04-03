@@ -1,6 +1,5 @@
-package com.john.themoviedb.details.view
+package com.john.themoviedb.details.view.viewholders
 
-import com.john.themoviedb.common.BaseViewHolder
 import com.john.themoviedb.databinding.ReviewListContentBinding
 import com.john.themoviedb.details.callbacks.MovieReviewItemListener
 import com.john.themoviedb.details.model.Review

@@ -15,16 +15,18 @@
             type="com.john.themoviedb.details.viewmodel.DetailMovieViewModel" />
     </data>
 
-    <merge>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="@{viewModel.dataLoading? View.INVISIBLE : View.VISIBLE}"
+        tools:context="com.john.themoviedb.details.view.DetailMovieFragment">
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:visibility="@{viewModel.dataLoading? View.INVISIBLE : View.VISIBLE}"
-            tools:context="com.john.themoviedb.details.view.DetailMovieFragment">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -33,6 +35,7 @@
                 tools:context=".DetailMovieActivity">
 
                 <LinearLayout
+                    android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -97,6 +100,7 @@
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/top_layout"
                     android:maxLines="3"
                     android:padding="16dp"
                     android:text="@{model.overview}"
@@ -108,38 +112,41 @@
                     android:id="@+id/list_item_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/movie_overview_text_view"
                     android:layout_marginTop="@dimen/trailer_vertical_margin"
-                    app:trailersReviews="@{viewModel.trailersReviews}"
-                    tools:listitem="@layout/trailer_list_content">
+                    app:trailersReviews="@{viewModel.trailersReviews}" />
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
 
-        </ScrollView>
+            </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/searching"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}">
-
-            <TextView
-                android:id="@+id/search_term"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+            <LinearLayout
+                android:id="@+id/searching"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Searching ..."
-                android:textSize="16sp" />
+                android:orientation="vertical"
+                android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}"
+                tools:visibility="visible">
 
-            <ProgressBar
-                android:id="@+id/search_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true" />
-        </LinearLayout>
-    </merge>
+                <TextView
+                    android:id="@+id/search_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Searching ..."
+                    android:textSize="16sp"
+                    tools:visibility="visible" />
+
+                <ProgressBar
+                    android:id="@+id/search_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+
 </layout>

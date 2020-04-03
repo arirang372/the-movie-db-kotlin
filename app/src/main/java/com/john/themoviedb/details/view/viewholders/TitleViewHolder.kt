@@ -1,6 +1,5 @@
-package com.john.themoviedb.details.view
+package com.john.themoviedb.details.view.viewholders
 
-import com.john.themoviedb.common.BaseViewHolder
 import com.john.themoviedb.databinding.TitleListContentBinding
 import com.john.themoviedb.details.model.Category
 

@@ -3,7 +3,7 @@ package com.john.themoviedb.details.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.john.themoviedb.common.BaseViewHolder
+import com.john.themoviedb.details.view.viewholders.BaseViewHolder
 import com.john.themoviedb.databinding.ReviewListContentBinding
 import com.john.themoviedb.databinding.TitleListContentBinding
 import com.john.themoviedb.databinding.TrailerListContentBinding
@@ -12,6 +12,9 @@ import com.john.themoviedb.details.callbacks.MovieTrailerItemListener
 import com.john.themoviedb.details.model.Category
 import com.john.themoviedb.details.model.Review
 import com.john.themoviedb.details.model.Trailer
+import com.john.themoviedb.details.view.viewholders.ReviewViewHolder
+import com.john.themoviedb.details.view.viewholders.TitleViewHolder
+import com.john.themoviedb.details.view.viewholders.TrailerViewHolder
 import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 import java.util.*
 
@@ -41,7 +44,9 @@ class DetailMovieAdapter(
                     parent,
                     false
                 )
-                TitleViewHolder(binding)
+                TitleViewHolder(
+                    binding
+                )
             }
             TYPE_TRAILER -> {
                 val binding = TrailerListContentBinding.inflate(
@@ -49,7 +54,11 @@ class DetailMovieAdapter(
                     parent,
                     false
                 )
-                TrailerViewHolder(binding, trailersReviews, mTrailerCallback)
+                TrailerViewHolder(
+                    binding,
+                    trailersReviews,
+                    mTrailerCallback
+                )
             }
             TYPE_REVIEW -> {
                 val binding = ReviewListContentBinding.inflate(
@@ -57,7 +66,11 @@ class DetailMovieAdapter(
                     parent,
                     false
                 )
-                ReviewViewHolder(binding, trailersReviews, mReviewCallback)
+                ReviewViewHolder(
+                    binding,
+                    trailersReviews,
+                    mReviewCallback
+                )
             }
             else -> throw java.lang.IllegalArgumentException("Invalid view type")
         }
