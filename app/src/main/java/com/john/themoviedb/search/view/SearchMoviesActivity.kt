@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.john.themoviedb.R
 import com.john.themoviedb.ViewModelFactory
 import com.john.themoviedb.databinding.ActivitySearchMoviesBinding
+import com.john.themoviedb.details.view.DetailMovieActivity
+import com.john.themoviedb.search.model.Movie
 import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 
 
@@ -38,7 +40,11 @@ class SearchMoviesActivity : AppCompatActivity() {
 
     fun observeLiveData() {
         viewModel.getOpenTaskEvent().observe(this, Observer {
-
+            openMovieDetail(it)
         })
+    }
+
+    private fun openMovieDetail(movie: Movie) {
+        startActivity(DetailMovieActivity.getIntent(this, movie))
     }
 }

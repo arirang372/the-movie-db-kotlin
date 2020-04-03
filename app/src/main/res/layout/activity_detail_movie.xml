@@ -39,7 +39,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@{model.backdrop_path}" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/detail_toolbar"

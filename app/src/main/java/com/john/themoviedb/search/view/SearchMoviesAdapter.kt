@@ -16,6 +16,7 @@ import java.util.*
 class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
     RecyclerView.Adapter<SearchMoviesAdapter.MovieViewHolder>() {
     private var movies: MutableList<Movie> = Collections.emptyList()
+    private var viewModel: SearchMoviesViewModel = viewModel
 
     class MovieViewHolder(binding: MovieListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -51,9 +52,9 @@ class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieListItemBinding.model = movies[position]
-        holder.movieListItemBinding.callback = object : MovieItemListener{
+        holder.movieListItemBinding.callback = object : MovieItemListener {
             override fun onItemClicked(movie: Movie) {
-
+                viewModel.setMovieDetail(movie)
             }
         }
         holder.movieListItemBinding.executePendingBindings()

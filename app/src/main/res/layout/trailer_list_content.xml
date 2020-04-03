@@ -6,12 +6,17 @@
         <variable
             name="model"
             type="com.john.themoviedb.details.model.Trailer" />
+
+        <variable
+            name="callback"
+            type="com.john.themoviedb.details.callbacks.MovieTrailerItemListener" />
     </data>
 
     <LinearLayout
         android:id="@+id/trailer_list_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="@{()-> callback.onTrailerItemClicked(model)}"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
@@ -24,7 +29,8 @@
                 android:id="@+id/thumbnail_trailer_image_view"
                 android:layout_width="@dimen/trailer_width_for_detail"
                 android:layout_height="@dimen/trailer_height_for_detail"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@{model.trailerImageUrl}" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -41,6 +47,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:padding="16dp"
+            android:text="@{model.name}"
             android:textColor="@android:color/black" />
 
     </LinearLayout>

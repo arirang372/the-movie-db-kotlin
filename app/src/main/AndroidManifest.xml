@@ -18,7 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".details.view.DetailMovieActivity" />
+        <activity
+            android:name=".details.view.DetailMovieActivity"
+            android:parentActivityName=".search.view.SearchMoviesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".search.view.SearchMoviesActivity" />
+        </activity>
     </application>
 
 </manifest>

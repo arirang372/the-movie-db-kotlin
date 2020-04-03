@@ -6,6 +6,7 @@ import com.john.themoviedb.BuildConfig
 import com.john.themoviedb.data.source.DataSource
 import com.john.themoviedb.data.source.remote.model.ApiResponse
 import com.john.themoviedb.data.source.remote.model.BaseApiResponse
+import com.john.themoviedb.details.model.Category
 import com.john.themoviedb.details.model.Review
 import com.john.themoviedb.details.model.Trailer
 import com.john.themoviedb.search.model.Movie
@@ -82,9 +83,9 @@ class RemoteDataLoader {
         Observable.zip(getMovieTrailers(movieId = movieId), getMovieReviews(movieId),
             BiFunction<ApiResponse<Trailer>, ApiResponse<Review>, MutableList<Comparable<*>>> { trailers, reviews ->
                 var combinedList = mutableListOf<Comparable<*>>()
-                combinedList.add("Videos")
+                combinedList.add(Category("Video"))
                 combinedList.addAll(createTrailerUrls(trailers.results))
-                combinedList.add("Reviews")
+                combinedList.add(Category("Reviews"))
                 combinedList.addAll(reviews.results)
                 combinedList
             }).subscribe(object : Observer<MutableList<Comparable<*>>> {
@@ -95,6 +96,7 @@ class RemoteDataLoader {
             }
 
             override fun onNext(reviewsAndTrailers: MutableList<Comparable<*>>) {
+                observableList.clear()
                 observableList.addAll(reviewsAndTrailers)
                 callback.onReviewsTrailersLoaded()
             }
