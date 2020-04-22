@@ -72,4 +72,14 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
     private fun openUri(uri: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
     }
+
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("onDestroy")
+    }
 }

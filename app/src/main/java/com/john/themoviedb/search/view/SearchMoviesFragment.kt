@@ -47,6 +47,7 @@ class SearchMoviesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.main_activity, menu)
         when (viewModel?.sortByField?.get()) {
             MovieConstants.SortBy.MOST_POPULAR ->
@@ -58,10 +59,21 @@ class SearchMoviesFragment : Fragment() {
             MovieConstants.SortBy.FAVORITES ->
                 menu?.let { it.findItem(R.id.sort_by_favorite).setCheckable(true) }
         }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel?.loadAllMovies(item.itemId)
         return true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("onDestroy")
     }
 }

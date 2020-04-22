@@ -51,4 +51,14 @@ class DetailMovieActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("onDestroy")
+    }
 }

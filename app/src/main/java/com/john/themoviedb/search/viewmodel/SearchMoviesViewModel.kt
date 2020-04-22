@@ -6,8 +6,8 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import com.john.themoviedb.R
+import com.john.themoviedb.SingleLiveEvent
 import com.john.themoviedb.data.MovieConstants
 import com.john.themoviedb.data.MovieRepository
 import com.john.themoviedb.data.source.DataSource
@@ -19,7 +19,7 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
     val movies: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
-    private val openTaskEvent = MutableLiveData<Movie>()
+    private val openTaskEvent = SingleLiveEvent<Movie>()
 
     init {
         sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
@@ -54,10 +54,10 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     }
 
     fun setMovieDetail(movie: Movie) {
-        openTaskEvent.value = movie
+        openTaskEvent.setValue(movie)
     }
 
-    fun getOpenTaskEvent(): MutableLiveData<Movie> {
+    fun getOpenTaskEvent(): SingleLiveEvent<Movie> {
         return openTaskEvent
     }
 }

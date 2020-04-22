@@ -38,7 +38,7 @@ class SearchMoviesActivity : AppCompatActivity() {
         searchMoviesActivityBinding.executePendingBindings()
     }
 
-    fun observeLiveData() {
+    private fun observeLiveData() {
         viewModel.getOpenTaskEvent().observe(this, Observer {
             openMovieDetail(it)
         })
@@ -46,5 +46,15 @@ class SearchMoviesActivity : AppCompatActivity() {
 
     private fun openMovieDetail(movie: Movie) {
         startActivity(DetailMovieActivity.getIntent(this, movie))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("onDestroy")
     }
 }
