@@ -3,13 +3,20 @@ package com.john.themoviedb.details.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Review(var author: String?, var content: String?, var id: String?, var url: String?) :
+data class Review(
+    var author: String?,
+    var content: String?,
+    var id: String?,
+    var url: String?,
+    var movieId: Long
+) :
     Parcelable, Comparable<Review> {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readLong()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -17,6 +24,7 @@ data class Review(var author: String?, var content: String?, var id: String?, va
         parcel.writeString(content)
         parcel.writeString(id)
         parcel.writeString(url)
+        parcel.writeLong(movieId)
     }
 
     override fun describeContents(): Int {

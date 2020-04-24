@@ -14,10 +14,10 @@ import com.john.themoviedb.data.source.DataSource
 import com.john.themoviedb.search.model.Movie
 
 class SearchMoviesViewModel(application: Application, repository: MovieRepository) :
-    AndroidViewModel(application), DataSource.LoadMoviesCallback {
+    AndroidViewModel(application) {
     private val mRepository: MovieRepository = repository
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
-    val movies: ObservableList<Movie> = ObservableArrayList()
+    val movieList: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
     private val openTaskEvent = SingleLiveEvent<Movie>()
 
@@ -29,14 +29,6 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
         dataLoading.set(isLoading)
     }
 
-    override fun onMoviesLoaded() {
-        setDataLoading(false)
-    }
-
-    override fun onMovieNotAvailable() {
-        setDataLoading(false)
-    }
-
     fun loadAllMovies(resourceId: Int) {
         when (resourceId) {
             R.id.sort_by_popular -> {
@@ -46,10 +38,23 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
             R.id.sort_by_top_rated -> {
                 sortByField?.set(MovieConstants.SortBy.TOP_RATED)
             }
+            R.id.sort_by_favorite -> {
+                sortByField?.set(MovieConstants.SortBy.FAVORITES)
+            }
         }
         if (resourceId != 0) {
             setDataLoading(true)
-            mRepository.loadAllMovies(sortByField.get()!!, this, movies)
+            mRepository.loadAllMovies(sortByField.get()!!, object : DataSource.LoadMoviesCallback {
+                override fun onMoviesLoaded(movies: MutableList<Movie>) {
+                    setDataLoading(false)
+                    movieList.clear()
+                    movieList.addAll(movies)
+                }
+
+                override fun onMovieNotAvailable() {
+                    setDataLoading(false)
+                }
+            })
         }
     }
 

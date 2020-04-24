@@ -76,7 +76,9 @@
                             android:rating="@{model.rating}"
                             android:stepSize="0.1" />
 
-                        <include layout="@layout/favorite" />
+                        <include
+                            layout="@layout/favorite"
+                            app:viewModel="@{viewModel}" />
 
                         <TextView
                             android:id="@+id/movie_user_rating_text_view"

@@ -7,29 +7,47 @@ import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
 import com.john.themoviedb.data.MovieRepository
 import com.john.themoviedb.data.source.DataSource
+import com.john.themoviedb.search.model.Movie
 
 
 class DetailMovieViewModel(application: Application, repository: MovieRepository) :
-    AndroidViewModel(application), DataSource.LoadReviewsTrailersCallback {
+    AndroidViewModel(application) {
 
     private val mRepository: MovieRepository = repository
     val trailersReviews: ObservableList<Comparable<*>> = ObservableArrayList()
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
-
+    val isFavorite: ObservableBoolean = ObservableBoolean(false)
     private fun setDataLoading(isLoading: Boolean) {
         dataLoading.set(isLoading)
     }
 
-    override fun onReviewsTrailersLoaded() {
-        setDataLoading(false)
-    }
-
-    override fun onReviewsTrailersNotAvailable() {
-        setDataLoading(false)
-    }
-
     fun loadMovieTrailersAndReviews(movieId: Long) {
         setDataLoading(true)
-        mRepository.loadReviewsAndTrailers(movieId, this, trailersReviews)
+        setMovieFavorite(movieId)
+        mRepository.loadReviewsAndTrailers(
+            movieId,
+            object : DataSource.LoadReviewsTrailersCallback {
+                override fun onReviewsTrailersLoaded(reviewsTrailers: MutableList<Comparable<*>>) {
+                    setDataLoading(false)
+                    trailersReviews.clear()
+                    trailersReviews.addAll(reviewsTrailers)
+                }
+
+                override fun onReviewsTrailersNotAvailable() {
+                    setDataLoading(false)
+                }
+            })
+    }
+
+    private fun setMovieFavorite(id: Long) {
+        mRepository.getMovie(id, object : DataSource.GetMovieCallback {
+            override fun onMovieLoaded(movie: Movie) {
+                isFavorite.set(true)
+            }
+
+            override fun onDataNotAvailable() {
+                isFavorite.set(false)
+            }
+        })
     }
 }

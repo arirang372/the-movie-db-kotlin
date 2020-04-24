@@ -3,7 +3,6 @@ package com.john.themoviedb.details.model
 import android.os.Parcel
 import android.os.Parcelable
 
-
 data class Trailer(
     var id: String?,
     var key: String?,
@@ -12,7 +11,8 @@ data class Trailer(
     var size: Int,
     var type: String?,
     var trailerImageUrl: String?,
-    var trailerVideoUrl: String?
+    var trailerVideoUrl: String?,
+    var movieId: Long
 ) : Parcelable, Comparable<Trailer> {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -22,7 +22,8 @@ data class Trailer(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readLong()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -34,6 +35,7 @@ data class Trailer(
         parcel.writeString(type)
         parcel.writeString(trailerImageUrl)
         parcel.writeString(trailerVideoUrl)
+        parcel.writeLong(movieId)
     }
 
     override fun describeContents(): Int {
