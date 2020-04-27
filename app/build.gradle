@@ -4,9 +4,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
+def githubPropertiesFile = rootProject.file("github.properties")
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(githubPropertiesFile))
+
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.john.themoviedb"
         minSdkVersion 21
@@ -37,6 +40,17 @@ android {
 
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
+    repositories {
+        maven {
+            name = "NetworkAndroidLibrary"
+            url = uri("https://maven.pkg.github.com/arirang372/network-library-android")
+            credentials {
+                username = System.getenv("GPR_USER") ?: githubProperties['gpr.usr']
+                password = System.getenv("GPR_API_KEY") ?: githubProperties['gpr.key']
+            }
+        }
     }
 }
 
@@ -75,4 +89,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation 'com.john.networklib_livedata:networklib-livedata:1.0.0'
 }

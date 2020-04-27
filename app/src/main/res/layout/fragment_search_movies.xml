@@ -29,9 +29,13 @@
 
         </FrameLayout>
 
-        <include layout="@layout/empty_movie" />
+        <include
+            layout="@layout/empty_movie"
+            app:viewModel="@{viewModel}" />
 
-        <include layout="@layout/empty_favorite" />
+        <include
+            layout="@layout/empty_favorite"
+            app:viewModel="@{viewModel}" />
 
         <ProgressBar
             android:id="@+id/loading_indicator_pb"

@@ -6,6 +6,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
+import com.john.networklib_livedata.ConnectivityStatus
 import com.john.themoviedb.R
 import com.john.themoviedb.SingleLiveEvent
 import com.john.themoviedb.data.MovieConstants
@@ -19,6 +20,7 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
     val movieList: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
+    val isNetworkAvailable: ObservableBoolean = ObservableBoolean(false)
     private val openTaskEvent = SingleLiveEvent<Movie>()
 
     init {
@@ -33,7 +35,6 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
         when (resourceId) {
             R.id.sort_by_popular -> {
                 sortByField?.set(MovieConstants.SortBy.MOST_POPULAR)
-
             }
             R.id.sort_by_top_rated -> {
                 sortByField?.set(MovieConstants.SortBy.TOP_RATED)
@@ -55,6 +56,18 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
                     setDataLoading(false)
                 }
             })
+        }
+    }
+
+    fun setIsNetworkAvailable(connectivityStatus: ConnectivityStatus) {
+        if ((connectivityStatus == ConnectivityStatus.OFFLINE
+                    || connectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET
+                    || connectivityStatus == ConnectivityStatus.UNKNOWN)
+        ) {
+            isNetworkAvailable.set(false)
+        } else {
+            isNetworkAvailable.set(true)
+            loadAllMovies(R.id.sort_by_popular)
         }
     }
 

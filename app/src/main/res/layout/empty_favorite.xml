@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/empty_favorite_container"
-    android:orientation="vertical"
-    android:visibility="gone">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_star_black_124dp"
-        />
+    <data>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.john.themoviedb.search.viewmodel.SearchMoviesViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/empty_favorite_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/no_movies"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        />
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_star_black_124dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_movies"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

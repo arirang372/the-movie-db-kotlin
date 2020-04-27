@@ -3,8 +3,10 @@ package com.john.themoviedb.search.view
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.john.networklib_livedata.NetworkEvents
 import com.john.themoviedb.R
 import com.john.themoviedb.data.MovieConstants
 import com.john.themoviedb.databinding.FragmentSearchMoviesBinding
@@ -15,13 +17,26 @@ class SearchMoviesFragment : Fragment() {
     private lateinit var searchMoviesFragmentBinding: FragmentSearchMoviesBinding
     private var viewModel: SearchMoviesViewModel? = null
     private lateinit var recyclerView: RecyclerView
-
+    private lateinit var events: NetworkEvents
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = activity?.let {
             SearchMoviesActivity.obtainViewModel(it)
         }
-        viewModel?.loadAllMovies(R.id.sort_by_popular)
+        //viewModel?.loadAllMovies(R.id.sort_by_popular)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        events = NetworkEvents(activity)
+        events.enableWifiScan()
+        setUpNetworkChangedEvent()
+    }
+
+    private fun setUpNetworkChangedEvent() {
+        events.networkConnectionChangedEvent.observe(this, Observer {
+            viewModel?.setIsNetworkAvailable(it)
+        })
     }
 
     override fun onCreateView(
@@ -35,6 +50,16 @@ class SearchMoviesFragment : Fragment() {
         )
         setHasOptionsMenu(true)
         return searchMoviesFragmentBinding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        events.register()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        events.unregister()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,11 +90,6 @@ class SearchMoviesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel?.loadAllMovies(item.itemId)
         return true
-    }
-
-    override fun onStop() {
-        super.onStop()
-        println("onStop")
     }
 
     override fun onDestroy() {
