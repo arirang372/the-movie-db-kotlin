@@ -8,9 +8,10 @@ import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 
 
-class ViewModelFactory(application: Application) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(application: Application, repository: MovieRepository) :
+    ViewModelProvider.NewInstanceFactory() {
     private var mApplication = application
-    private var mRepository: MovieRepository = MovieRepository()
+    private var mRepository: MovieRepository = repository
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchMoviesViewModel::class.java)) {
@@ -25,7 +26,10 @@ class ViewModelFactory(application: Application) : ViewModelProvider.NewInstance
         private var instance: ViewModelFactory? = null
         fun getInstance(application: Application): ViewModelFactory {
             if (instance == null)
-                instance = ViewModelFactory(application)
+                instance = ViewModelFactory(
+                    application,
+                    Injection.provideMovieRepository(application.applicationContext)
+                )
             return instance as ViewModelFactory
         }
     }

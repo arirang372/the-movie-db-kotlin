@@ -4,12 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.john.themoviedb.details.model.Review
-import com.john.themoviedb.details.model.Trailer
 import com.john.themoviedb.search.model.Movie
 
 @Database(
-    entities = [Movie::class, Review::class, Trailer::class],
+    entities = [Movie::class],
     version = 1,
     exportSchema = false
 )
@@ -17,17 +15,19 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 
     companion object {
+        @Volatile
         private var mInstance: MovieDatabase? = null
 
-        @Synchronized
         fun getInstance(context: Context): MovieDatabase {
             if (mInstance == null) {
-                mInstance = Room.databaseBuilder(
-                    context.applicationContext, MovieDatabase::class.java,
-                    "MovieDatabase"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
+                synchronized(this) {
+                    mInstance = Room.databaseBuilder(
+                        context.applicationContext, MovieDatabase::class.java,
+                        "MovieDatabase.db"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+                }
             }
             return mInstance!!
         }

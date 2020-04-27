@@ -50,4 +50,14 @@ class DetailMovieViewModel(application: Application, repository: MovieRepository
             }
         })
     }
+
+    fun markMovieAsFavorite(movie: Movie) {
+        mRepository.saveMovie(movie)
+        setMovieFavorite(movie.id)
+    }
+
+    fun removeMovieFromFavorite(movie: Movie) {
+        mRepository.deleteMovie(movie.id)
+        setMovieFavorite(movie.id)
+    }
 }

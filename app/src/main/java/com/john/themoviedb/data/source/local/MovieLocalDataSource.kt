@@ -12,16 +12,17 @@ class MovieLocalDataSource(
     private val mMovieDao = movieDao
 
     companion object {
-        private lateinit var instance: MovieLocalDataSource
+        private var instance: MovieLocalDataSource? = null
 
-        @Synchronized
         fun getInstance(
             appExecutors: AppExecutors, movieDao: MovieDao
         ): MovieLocalDataSource {
-            if (instance == null) {
-                instance = MovieLocalDataSource(appExecutors, movieDao)
+            synchronized(this) {
+                if (instance == null) {
+                    instance = MovieLocalDataSource(appExecutors, movieDao)
+                }
             }
-            return instance
+            return instance!!
         }
     }
 

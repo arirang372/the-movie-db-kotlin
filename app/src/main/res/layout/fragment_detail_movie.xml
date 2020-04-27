@@ -13,6 +13,10 @@
         <variable
             name="viewModel"
             type="com.john.themoviedb.details.viewmodel.DetailMovieViewModel" />
+
+        <variable
+            name="callback"
+            type="com.john.themoviedb.details.callbacks.MovieDetailListener" />
     </data>
 
     <ScrollView
@@ -78,6 +82,8 @@
 
                         <include
                             layout="@layout/favorite"
+                            app:callback="@{callback}"
+                            app:model="@{model}"
                             app:viewModel="@{viewModel}" />
 
                         <TextView

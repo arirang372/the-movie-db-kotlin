@@ -9,15 +9,15 @@ import com.john.themoviedb.search.model.Movie
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM Movie")
+    @Query("SELECT * FROM movie")
     fun getMovies(): MutableList<Movie>
 
-    @Query("SELECT * FROM Movie WHERE id =:id")
+    @Query("SELECT * FROM movie WHERE id =:id")
     fun getMovie(id: Long): Movie
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: Movie)
 
-    @Query("DELETE FROM Movie WHERE id = :id")
+    @Query("DELETE FROM movie WHERE id = :id")
     fun deleteMovie(id: Long)
 }

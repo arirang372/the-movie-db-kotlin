@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.john.themoviedb.R
 import com.john.themoviedb.ViewModelFactory
 import com.john.themoviedb.databinding.FragmentDetailMovieBinding
+import com.john.themoviedb.details.callbacks.MovieDetailListener
 import com.john.themoviedb.details.callbacks.MovieReviewItemListener
 import com.john.themoviedb.details.callbacks.MovieTrailerItemListener
 import com.john.themoviedb.details.model.Review
@@ -21,7 +22,8 @@ import com.john.themoviedb.details.view.DetailMovieActivity.Companion.ARG_MOVIE
 import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 import com.john.themoviedb.search.model.Movie
 
-class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewItemListener {
+class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewItemListener,
+    MovieDetailListener {
     private lateinit var detailMovieFragmentBinding: FragmentDetailMovieBinding
     private lateinit var viewModel: DetailMovieViewModel
 
@@ -53,6 +55,7 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
             FragmentDetailMovieBinding.inflate(LayoutInflater.from(context), container, false)
         detailMovieFragmentBinding.model = movie
         detailMovieFragmentBinding.viewModel = viewModel
+        detailMovieFragmentBinding.callback = this
         var recyclerView =
             detailMovieFragmentBinding.root.findViewById<RecyclerView>(R.id.list_item_recycler_view)
         recyclerView.adapter = DetailMovieAdapter(this, this)
@@ -81,5 +84,13 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
     override fun onDestroy() {
         super.onDestroy()
         println("onDestroy")
+    }
+
+    override fun onMarkAsFavoriteButtonClicked(movie: Movie) {
+        viewModel.markMovieAsFavorite(movie)
+    }
+
+    override fun onRemoveFromFavoriteButtonClicked(movie: Movie) {
+        viewModel.removeMovieFromFavorite(movie)
     }
 }

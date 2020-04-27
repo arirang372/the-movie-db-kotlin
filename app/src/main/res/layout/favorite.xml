@@ -6,8 +6,16 @@
         <import type="android.view.View" />
 
         <variable
+            name="model"
+            type="com.john.themoviedb.search.model.Movie" />
+
+        <variable
             name="viewModel"
             type="com.john.themoviedb.details.viewmodel.DetailMovieViewModel" />
+
+        <variable
+            name="callback"
+            type="com.john.themoviedb.details.callbacks.MovieDetailListener" />
     </data>
 
     <LinearLayout
@@ -20,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="@{()->callback.onMarkAsFavoriteButtonClicked(model)}"
             android:text="@string/add_favorites"
             android:theme="@style/Button.Red"
             android:visibility="@{viewModel.isFavorite ? View.GONE : View.VISIBLE}" />
@@ -29,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:onClick="@{()-> callback.onRemoveFromFavoriteButtonClicked(model)}"
             android:text="@string/remove_favorites"
             android:theme="@style/Button.Red"
             android:visibility="@{viewModel.isFavorite ? View.VISIBLE : View.GONE}" />
