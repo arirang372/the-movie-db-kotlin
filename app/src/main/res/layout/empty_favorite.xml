@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="@{viewModel.movieList.empty? View.VISIBLE : View.GONE}"
         tools:visibility="visible">
 
         <ImageView

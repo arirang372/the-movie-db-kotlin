@@ -30,11 +30,7 @@ class MovieLocalDataSource(
         mAppExecutors.diskIO().execute {
             var movies = mMovieDao.getMovies()
             mAppExecutors.mainThread().execute {
-                if (movies.isEmpty()) {
-                    callback.onMovieNotAvailable()
-                } else {
                     callback.onMoviesLoaded(movies)
-                }
             }
         }
     }

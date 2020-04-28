@@ -43,19 +43,29 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
                 sortByField?.set(MovieConstants.SortBy.FAVORITES)
             }
         }
-        if (resourceId != 0) {
-            setDataLoading(true)
-            mRepository.loadAllMovies(sortByField.get()!!, object : DataSource.LoadMoviesCallback {
-                override fun onMoviesLoaded(movies: MutableList<Movie>) {
-                    setDataLoading(false)
-                    movieList.clear()
-                    movieList.addAll(movies)
-                }
+        if (resourceId != 0)
+            loadMovies()
+    }
 
-                override fun onMovieNotAvailable() {
-                    setDataLoading(false)
-                }
-            })
+    private fun loadMovies() {
+        setDataLoading(true)
+        mRepository.loadAllMovies(sortByField.get()!!, object : DataSource.LoadMoviesCallback {
+            override fun onMoviesLoaded(movies: MutableList<Movie>) {
+                setDataLoading(false)
+                movieList.clear()
+                movieList.addAll(movies)
+            }
+
+            override fun onMovieNotAvailable() {
+                setDataLoading(false)
+                movieList.clear()
+            }
+        })
+    }
+
+    fun updateFavoriteMovies() {
+        if (sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES)) {
+            loadMovies()
         }
     }
 
@@ -64,7 +74,8 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
                     || connectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET
                     || connectivityStatus == ConnectivityStatus.UNKNOWN)
         ) {
-            isNetworkAvailable.set(false)
+            if(!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
+                isNetworkAvailable.set(false)
         } else {
             isNetworkAvailable.set(true)
             loadAllMovies(R.id.sort_by_popular)

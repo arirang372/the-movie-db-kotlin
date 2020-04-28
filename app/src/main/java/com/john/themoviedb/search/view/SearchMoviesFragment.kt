@@ -23,7 +23,6 @@ class SearchMoviesFragment : Fragment() {
         viewModel = activity?.let {
             SearchMoviesActivity.obtainViewModel(it)
         }
-        //viewModel?.loadAllMovies(R.id.sort_by_popular)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,6 +54,8 @@ class SearchMoviesFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         events.register()
+        //refresh the favorite
+        viewModel?.updateFavoriteMovies()
     }
 
     override fun onStop() {
