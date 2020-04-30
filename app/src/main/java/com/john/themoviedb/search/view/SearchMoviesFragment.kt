@@ -90,6 +90,7 @@ class SearchMoviesFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         viewModel?.loadAllMovies(item.itemId)
+
         return true
     }
 

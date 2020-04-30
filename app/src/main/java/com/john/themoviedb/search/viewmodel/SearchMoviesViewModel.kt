@@ -5,30 +5,32 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
-import androidx.lifecycle.AndroidViewModel
 import com.john.networklib_livedata.ConnectivityStatus
 import com.john.themoviedb.R
 import com.john.themoviedb.SingleLiveEvent
+import com.john.themoviedb.common.viewModel.BaseViewModel
 import com.john.themoviedb.data.MovieConstants
 import com.john.themoviedb.data.MovieRepository
 import com.john.themoviedb.data.source.DataSource
+import com.john.themoviedb.search.callbacks.SearchMovieListener
 import com.john.themoviedb.search.model.Movie
 
 class SearchMoviesViewModel(application: Application, repository: MovieRepository) :
-    AndroidViewModel(application) {
+    BaseViewModel(application) {
     private val mRepository: MovieRepository = repository
-    val dataLoading: ObservableBoolean = ObservableBoolean(false)
+
     val movieList: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
     val isNetworkAvailable: ObservableBoolean = ObservableBoolean(false)
+    lateinit var mSearchMovieListener : SearchMovieListener
     private val openTaskEvent = SingleLiveEvent<Movie>()
 
     init {
         sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
     }
 
-    private fun setDataLoading(isLoading: Boolean) {
-        dataLoading.set(isLoading)
+    fun setSearchMovieListener(searchMovieListener: SearchMovieListener){
+        mSearchMovieListener = searchMovieListener
     }
 
     fun loadAllMovies(resourceId: Int) {
@@ -54,11 +56,13 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
                 setDataLoading(false)
                 movieList.clear()
                 movieList.addAll(movies)
+                mSearchMovieListener.updateActionBar(sortByField.get()!!)
             }
 
             override fun onMovieNotAvailable() {
                 setDataLoading(false)
                 movieList.clear()
+                mSearchMovieListener.updateActionBar(sortByField.get()!!)
             }
         })
     }
@@ -74,7 +78,7 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
                     || connectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET
                     || connectivityStatus == ConnectivityStatus.UNKNOWN)
         ) {
-            if(!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
+            if (!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
                 isNetworkAvailable.set(false)
         } else {
             isNetworkAvailable.set(true)

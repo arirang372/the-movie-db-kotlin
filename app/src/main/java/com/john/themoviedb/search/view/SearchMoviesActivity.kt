@@ -1,5 +1,6 @@
 package com.john.themoviedb.search.view
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,11 +11,12 @@ import com.john.themoviedb.R
 import com.john.themoviedb.ViewModelFactory
 import com.john.themoviedb.databinding.ActivitySearchMoviesBinding
 import com.john.themoviedb.details.view.DetailMovieActivity
+import com.john.themoviedb.search.callbacks.SearchMovieListener
 import com.john.themoviedb.search.model.Movie
 import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 
 
-class SearchMoviesActivity : AppCompatActivity() {
+class SearchMoviesActivity : AppCompatActivity(), SearchMovieListener {
     private lateinit var searchMoviesActivityBinding: ActivitySearchMoviesBinding
 
     companion object {
@@ -28,14 +30,26 @@ class SearchMoviesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = obtainViewModel(this)
+        viewModel.setSearchMovieListener(this)
         searchMoviesActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_search_movies)
+        setUpFragment()
+        setUpToolBar()
+        observeLiveData()
+        searchMoviesActivityBinding.executePendingBindings()
+    }
+
+    private fun setUpFragment() {
         supportFragmentManager.beginTransaction()
             .add(R.id.movie_main_container, SearchMoviesFragment())
             .commit()
+    }
 
-        observeLiveData()
-        searchMoviesActivityBinding.executePendingBindings()
+    private fun setUpToolBar() {
+        searchMoviesActivityBinding.toolbar.setTitleTextColor(Color.WHITE)
+        setSupportActionBar(searchMoviesActivityBinding.toolbar)
+        supportActionBar?.title = getString(R.string.app_name)
+        updateActionBar(viewModel.sortByField.get()!!)
     }
 
     private fun observeLiveData() {
@@ -56,5 +70,9 @@ class SearchMoviesActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         println("onDestroy")
+    }
+
+    override fun updateActionBar(sortBy: String) {
+        supportActionBar?.title = getString(R.string.app_name).plus(" - $sortBy")
     }
 }
