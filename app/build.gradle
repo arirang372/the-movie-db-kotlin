@@ -90,5 +90,5 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    implementation 'com.john.networklib_livedata:networklib-livedata:1.0.0'
+    implementation 'com.john.networklib_livedata:networklib-livedata:1.0.2'
 }
