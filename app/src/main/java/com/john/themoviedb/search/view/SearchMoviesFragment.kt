@@ -2,40 +2,30 @@ package com.john.themoviedb.search.view
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.john.networklib_livedata.NetworkEvents
+import com.john.networklib_livedata.ConnectivityStatus
 import com.john.themoviedb.R
+import com.john.themoviedb.common.ui.BaseFragment
 import com.john.themoviedb.data.MovieConstants
 import com.john.themoviedb.databinding.FragmentSearchMoviesBinding
 import com.john.themoviedb.search.viewmodel.SearchMoviesViewModel
 
 
-class SearchMoviesFragment : Fragment() {
+class SearchMoviesFragment : BaseFragment() {
     private lateinit var searchMoviesFragmentBinding: FragmentSearchMoviesBinding
     private var viewModel: SearchMoviesViewModel? = null
     private lateinit var recyclerView: RecyclerView
-    private lateinit var events: NetworkEvents
+
+    override fun setUpIsNetworkAvailable(connectivityStatus: ConnectivityStatus) {
+        viewModel?.setIsNetworkAvailable(connectivityStatus)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = activity?.let {
             SearchMoviesActivity.obtainViewModel(it)
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        events = NetworkEvents(activity)
-        events.enableWifiScan()
-        setUpNetworkChangedEvent()
-    }
-
-    private fun setUpNetworkChangedEvent() {
-        events.networkConnectionChangedEvent.observe(this, Observer {
-            viewModel?.setIsNetworkAvailable(it)
-        })
     }
 
     override fun onCreateView(
@@ -53,14 +43,8 @@ class SearchMoviesFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        events.register()
         //refresh the favorite
         viewModel?.updateFavoriteMovies()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        events.unregister()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

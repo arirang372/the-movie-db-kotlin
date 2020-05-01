@@ -5,7 +5,6 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
-import com.john.networklib_livedata.ConnectivityStatus
 import com.john.themoviedb.R
 import com.john.themoviedb.SingleLiveEvent
 import com.john.themoviedb.common.viewModel.BaseViewModel
@@ -22,14 +21,14 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     val movieList: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
     val isNetworkAvailable: ObservableBoolean = ObservableBoolean(false)
-    lateinit var mSearchMovieListener : SearchMovieListener
+    lateinit var mSearchMovieListener: SearchMovieListener
     private val openTaskEvent = SingleLiveEvent<Movie>()
 
     init {
         sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
     }
 
-    fun setSearchMovieListener(searchMovieListener: SearchMovieListener){
+    fun setSearchMovieListener(searchMovieListener: SearchMovieListener) {
         mSearchMovieListener = searchMovieListener
     }
 
@@ -73,25 +72,22 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
         }
     }
 
-    fun setIsNetworkAvailable(connectivityStatus: ConnectivityStatus) {
-        if ((connectivityStatus == ConnectivityStatus.OFFLINE
-                    || connectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET
-                    || connectivityStatus == ConnectivityStatus.UNKNOWN)
-        ) {
-            if (!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
-                isNetworkAvailable.set(false)
-        } else {
-            isNetworkAvailable.set(true)
-            loadAllMovies(R.id.sort_by_popular)
-        }
-    }
-
     fun setMovieDetail(movie: Movie) {
         openTaskEvent.setValue(movie)
     }
 
     fun getOpenTaskEvent(): SingleLiveEvent<Movie> {
         return openTaskEvent
+    }
+
+    override fun executeOnNetwork() {
+        if (!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
+            isNetworkAvailable.set(false)
+    }
+
+    override fun executeOnNotNetwork() {
+        isNetworkAvailable.set(true)
+        loadAllMovies(R.id.sort_by_popular)
     }
 }
 
