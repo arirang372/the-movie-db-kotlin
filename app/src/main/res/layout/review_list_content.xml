@@ -6,7 +6,9 @@
         <variable
             name="model"
             type="com.john.themoviedb.details.model.Review" />
-
+        <variable
+            name="viewModel"
+            type="com.john.themoviedb.details.viewmodel.DetailMovieViewModel" />
         <variable
             name="callback"
             type="com.john.themoviedb.details.callbacks.MovieReviewItemListener" />
@@ -16,6 +18,7 @@
         android:id="@+id/review_list_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="@{viewModel.isNetworkAvailable}"
         android:onClick="@{()-> callback.onReviewClicked(model)}"
         android:orientation="vertical"
         android:paddingLeft="16dp"

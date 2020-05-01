@@ -22,7 +22,7 @@
             android:id="@+id/framelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.isNetworkAvailable ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.shouldShowEmptyMovieScreen? View.GONE : View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <include

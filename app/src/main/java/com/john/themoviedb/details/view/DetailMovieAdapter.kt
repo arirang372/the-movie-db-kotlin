@@ -15,10 +15,12 @@ import com.john.themoviedb.details.view.viewholders.BaseViewHolder
 import com.john.themoviedb.details.view.viewholders.ReviewViewHolder
 import com.john.themoviedb.details.view.viewholders.TitleViewHolder
 import com.john.themoviedb.details.view.viewholders.TrailerViewHolder
+import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 import java.util.*
 
 
 class DetailMovieAdapter(
+    viewModel: DetailMovieViewModel,
     trailerCallback: MovieTrailerItemListener,
     reviewCallback: MovieReviewItemListener
 ) :
@@ -26,6 +28,7 @@ class DetailMovieAdapter(
     private var trailersReviews: MutableList<Comparable<*>> = Collections.emptyList()
     private var mTrailerCallback: MovieTrailerItemListener = trailerCallback
     private var mReviewCallback: MovieReviewItemListener = reviewCallback
+    private var mViewModel = viewModel
 
     companion object {
         private const val TYPE_TITLE = 0
@@ -53,6 +56,7 @@ class DetailMovieAdapter(
                 )
                 TrailerViewHolder(
                     binding,
+                    mViewModel,
                     trailersReviews,
                     mTrailerCallback
                 )
@@ -65,6 +69,7 @@ class DetailMovieAdapter(
                 )
                 ReviewViewHolder(
                     binding,
+                    mViewModel,
                     trailersReviews,
                     mReviewCallback
                 )

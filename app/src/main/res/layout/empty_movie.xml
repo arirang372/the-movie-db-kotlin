@@ -17,7 +17,7 @@
     android:id="@+id/empty_movie_container"
     android:orientation="vertical"
     tools:visibility="visible"
-    android:visibility="@{viewModel.isNetworkAvailable ? View.GONE : View.VISIBLE}">
+    android:visibility="@{viewModel.shouldShowEmptyMovieScreen ? View.VISIBLE : View.GONE}">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,11 +34,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/no_connection"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/no_connection"/>-->
 
 
 </LinearLayout>

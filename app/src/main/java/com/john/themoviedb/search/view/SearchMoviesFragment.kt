@@ -5,6 +5,7 @@ import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.john.networklib_livedata.ConnectivityStatus
+import com.john.networklib_livedata.NetworkEvents
 import com.john.themoviedb.R
 import com.john.themoviedb.common.ui.BaseFragment
 import com.john.themoviedb.data.MovieConstants
@@ -39,6 +40,11 @@ class SearchMoviesFragment : BaseFragment() {
         )
         setHasOptionsMenu(true)
         return searchMoviesFragmentBinding.root
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onStart() {
@@ -78,8 +84,14 @@ class SearchMoviesFragment : BaseFragment() {
         return true
     }
 
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         println("onDestroy")
     }
+
 }

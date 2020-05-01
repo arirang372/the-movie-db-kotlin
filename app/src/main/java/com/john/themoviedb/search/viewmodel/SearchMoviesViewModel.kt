@@ -2,7 +2,6 @@ package com.john.themoviedb.search.viewmodel
 
 import android.app.Application
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
 import com.john.themoviedb.R
@@ -20,9 +19,9 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
 
     val movieList: ObservableList<Movie> = ObservableArrayList()
     val sortByField = ObservableField<String>()
-    val isNetworkAvailable: ObservableBoolean = ObservableBoolean(false)
     lateinit var mSearchMovieListener: SearchMovieListener
     private val openTaskEvent = SingleLiveEvent<Movie>()
+    val shouldShowEmptyMovieScreen = ObservableField<Boolean>()
 
     init {
         sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
@@ -45,16 +44,17 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
             }
         }
         if (resourceId != 0)
-            loadMovies()
+            loadMovies(sortByField.get()!!)
     }
 
-    private fun loadMovies() {
+    private fun loadMovies(sortBy : String) {
         setDataLoading(true)
-        mRepository.loadAllMovies(sortByField.get()!!, object : DataSource.LoadMoviesCallback {
+        mRepository.loadAllMovies(sortBy, object : DataSource.LoadMoviesCallback {
             override fun onMoviesLoaded(movies: MutableList<Movie>) {
                 setDataLoading(false)
                 movieList.clear()
                 movieList.addAll(movies)
+                shouldShowEmptyMovieScreen.set(movies.isEmpty())
                 mSearchMovieListener.updateActionBar(sortByField.get()!!)
             }
 
@@ -68,7 +68,7 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
 
     fun updateFavoriteMovies() {
         if (sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES)) {
-            loadMovies()
+            loadMovies(sortByField.get()!!)
         }
     }
 
@@ -81,13 +81,14 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     }
 
     override fun executeOnNetwork() {
-        if (!sortByField.get()!!.contentEquals(MovieConstants.SortBy.FAVORITES))
-            isNetworkAvailable.set(false)
+        super.executeOnNetwork()
+        shouldShowEmptyMovieScreen.set(false)
+        loadMovies(sortByField.get()!!)
     }
 
     override fun executeOnNotNetwork() {
-        isNetworkAvailable.set(true)
-        loadAllMovies(R.id.sort_by_popular)
+        super.executeOnNotNetwork()
+        shouldShowEmptyMovieScreen.set(true)
     }
 }
 

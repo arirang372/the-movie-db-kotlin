@@ -57,11 +57,11 @@ class DetailMovieViewModel(application: Application, repository: MovieRepository
         setMovieFavorite(movie.id)
     }
 
-    override fun executeOnNetwork() {
-        TODO("Not yet implemented")
-    }
-
-    override fun executeOnNotNetwork() {
-        TODO("Not yet implemented")
-    }
+//    override fun executeOnNetwork() {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun executeOnNotNetwork() {
+//        TODO("Not yet implemented")
+//    }
 }

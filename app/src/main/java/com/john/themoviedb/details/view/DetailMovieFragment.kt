@@ -58,7 +58,7 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
         detailMovieFragmentBinding.callback = this
         var recyclerView =
             detailMovieFragmentBinding.root.findViewById<RecyclerView>(R.id.list_item_recycler_view)
-        recyclerView.adapter = DetailMovieAdapter(this, this)
+        recyclerView.adapter = DetailMovieAdapter(viewModel, this, this)
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return detailMovieFragmentBinding.root
@@ -74,6 +74,14 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
 
     private fun openUri(uri: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onStop() {

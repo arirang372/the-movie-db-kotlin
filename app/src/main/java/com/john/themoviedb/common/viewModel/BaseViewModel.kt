@@ -7,7 +7,7 @@ import com.john.networklib_livedata.ConnectivityStatus
 
 open abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
-
+    val isNetworkAvailable: ObservableBoolean = ObservableBoolean(false)
     fun setDataLoading(isLoading: Boolean) {
         dataLoading.set(isLoading)
     }
@@ -17,13 +17,17 @@ open abstract class BaseViewModel(application: Application) : AndroidViewModel(a
                     || connectivityStatus == ConnectivityStatus.WIFI_CONNECTED_HAS_NO_INTERNET
                     || connectivityStatus == ConnectivityStatus.UNKNOWN)
         ) {
-            executeOnNetwork()
-        } else {
             executeOnNotNetwork()
+        } else {
+            executeOnNetwork()
         }
     }
 
-    abstract fun executeOnNetwork()
+    open fun executeOnNetwork(){
+        isNetworkAvailable.set(true)
+    }
 
-    abstract fun executeOnNotNetwork()
+    open fun executeOnNotNetwork(){
+        isNetworkAvailable.set(false)
+    }
 }
