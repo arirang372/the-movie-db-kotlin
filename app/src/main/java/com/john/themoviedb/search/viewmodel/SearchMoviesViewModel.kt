@@ -34,20 +34,20 @@ class SearchMoviesViewModel(application: Application, repository: MovieRepositor
     fun loadAllMovies(resourceId: Int) {
         when (resourceId) {
             R.id.sort_by_popular -> {
-                sortByField?.set(MovieConstants.SortBy.MOST_POPULAR)
+                sortByField.set(MovieConstants.SortBy.MOST_POPULAR)
             }
             R.id.sort_by_top_rated -> {
-                sortByField?.set(MovieConstants.SortBy.TOP_RATED)
+                sortByField.set(MovieConstants.SortBy.TOP_RATED)
             }
             R.id.sort_by_favorite -> {
-                sortByField?.set(MovieConstants.SortBy.FAVORITES)
+                sortByField.set(MovieConstants.SortBy.FAVORITES)
             }
         }
         if (resourceId != 0)
             loadMovies(sortByField.get()!!)
     }
 
-    private fun loadMovies(sortBy : String) {
+    private fun loadMovies(sortBy: String) {
         setDataLoading(true)
         mRepository.loadAllMovies(sortBy, object : DataSource.LoadMoviesCallback {
             override fun onMoviesLoaded(movies: MutableList<Movie>) {

@@ -6,7 +6,7 @@ import java.util.concurrent.Executor
 
 
 class MainThreadExecutor : Executor {
-    val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
+    private val mainThreadHandler: Handler = Handler(Looper.getMainLooper())
     override fun execute(command: Runnable) {
         mainThreadHandler.post(command)
     }

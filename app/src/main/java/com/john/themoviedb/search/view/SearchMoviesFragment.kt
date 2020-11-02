@@ -5,7 +5,6 @@ import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.john.networklib_livedata.ConnectivityStatus
-import com.john.networklib_livedata.NetworkEvents
 import com.john.themoviedb.R
 import com.john.themoviedb.common.ui.BaseFragment
 import com.john.themoviedb.data.MovieConstants
@@ -43,10 +42,6 @@ class SearchMoviesFragment : BaseFragment() {
     }
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onStart() {
         super.onStart()
         //refresh the favorite
@@ -67,13 +62,13 @@ class SearchMoviesFragment : BaseFragment() {
         inflater.inflate(R.menu.main_activity, menu)
         when (viewModel?.sortByField?.get()) {
             MovieConstants.SortBy.MOST_POPULAR ->
-                menu?.let { it.findItem(R.id.sort_by_popular).setCheckable(true) }
+                menu.findItem(R.id.sort_by_popular).isCheckable = true
 
             MovieConstants.SortBy.TOP_RATED ->
-                menu?.let { it.findItem(R.id.sort_by_top_rated).setCheckable(true) }
+                menu.findItem(R.id.sort_by_top_rated).isCheckable = true
 
             MovieConstants.SortBy.FAVORITES ->
-                menu?.let { it.findItem(R.id.sort_by_favorite).setCheckable(true) }
+                menu.findItem(R.id.sort_by_favorite).isCheckable = true
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

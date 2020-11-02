@@ -3,7 +3,7 @@ package com.john.themoviedb.utils
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class AppExecutors() {
+class AppExecutors {
     companion object {
         private const val THREAD_COUNT: Int = 3
     }
