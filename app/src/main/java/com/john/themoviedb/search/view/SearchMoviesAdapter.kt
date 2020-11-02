@@ -13,10 +13,9 @@ import com.squareup.picasso.Picasso
 import java.util.*
 
 
-class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
+class SearchMoviesAdapter(private var viewModel: SearchMoviesViewModel) :
     RecyclerView.Adapter<SearchMoviesAdapter.MovieViewHolder>() {
     private var movies: MutableList<Movie> = Collections.emptyList()
-    private var viewModel: SearchMoviesViewModel = viewModel
 
     class MovieViewHolder(binding: MovieListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -41,10 +40,10 @@ class SearchMoviesAdapter(viewModel: SearchMoviesViewModel) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        var binding: MovieListContentBinding =
+        val binding: MovieListContentBinding =
             MovieListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        var view = binding.root
-        var gridNumberOfColumns = parent.context.resources.getInteger(R.integer.grid_number_cols)
+        val view = binding.root
+        val gridNumberOfColumns = parent.context.resources.getInteger(R.integer.grid_number_cols)
         view.layoutParams.height = (parent.width / gridNumberOfColumns * 1.5f).toInt()
         return MovieViewHolder(binding)
     }

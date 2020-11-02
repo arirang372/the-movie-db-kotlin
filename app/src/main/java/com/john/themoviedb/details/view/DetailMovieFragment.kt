@@ -29,8 +29,8 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
 
     companion object {
         fun newInstance(movie: Movie): DetailMovieFragment {
-            var movieDetail = DetailMovieFragment()
-            var args = Bundle()
+            val movieDetail = DetailMovieFragment()
+            val args = Bundle()
             args.putParcelable(ARG_MOVIE, movie)
             movieDetail.arguments = args
             return movieDetail
@@ -38,8 +38,8 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
     }
 
     private fun obtainViewModel(): DetailMovieViewModel {
-        var factory = activity?.application?.let { ViewModelFactory.getInstance(it) }
-        return ViewModelProviders.of(this!!.activity!!, factory)
+        val factory = activity?.application?.let { ViewModelFactory.getInstance(it) }
+        return ViewModelProviders.of(this.activity!!, factory)
             .get(DetailMovieViewModel::class.java)
     }
 
@@ -49,14 +49,14 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
         savedInstanceState: Bundle?
     ): View? {
         viewModel = obtainViewModel()
-        var movie = arguments?.let { it.getParcelable<Movie>(ARG_MOVIE) }
+        val movie = arguments?.getParcelable<Movie>(ARG_MOVIE)
         movie?.let { viewModel.loadMovieTrailersAndReviews(it.id) }
         detailMovieFragmentBinding =
             FragmentDetailMovieBinding.inflate(LayoutInflater.from(context), container, false)
         detailMovieFragmentBinding.model = movie
         detailMovieFragmentBinding.viewModel = viewModel
         detailMovieFragmentBinding.callback = this
-        var recyclerView =
+        val recyclerView =
             detailMovieFragmentBinding.root.findViewById<RecyclerView>(R.id.list_item_recycler_view)
         recyclerView.adapter = DetailMovieAdapter(viewModel, this, this)
         recyclerView.layoutManager =
@@ -74,14 +74,6 @@ class DetailMovieFragment : Fragment(), MovieTrailerItemListener, MovieReviewIte
 
     private fun openUri(uri: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onStop() {

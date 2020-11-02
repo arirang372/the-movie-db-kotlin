@@ -28,16 +28,15 @@ class MovieLocalDataSource(
 
     override fun loadAllMovies(sortBy: String, callback: DataSource.LoadMoviesCallback) {
         mAppExecutors.diskIO().execute {
-            var movies = mMovieDao.getMovies()
             mAppExecutors.mainThread().execute {
-                    callback.onMoviesLoaded(movies)
+                callback.onMoviesLoaded(mMovieDao.getMovies())
             }
         }
     }
 
     override fun getMovie(id: Long, callback: DataSource.GetMovieCallback) {
         mAppExecutors.diskIO().execute {
-            var movie = mMovieDao.getMovie(id)
+            val movie = mMovieDao.getMovie(id)
             mAppExecutors.mainThread().execute {
                 if (movie != null) {
                     callback.onMovieLoaded(movie)
