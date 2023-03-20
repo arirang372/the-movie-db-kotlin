@@ -3,6 +3,7 @@ package com.john.themoviedb.details.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -31,7 +32,8 @@ class DetailMovieActivity : AppCompatActivity() {
         detailMovieActivityBinding.model = intent.getParcelableExtra(ARG_MOVIE)
         setUpActionBar()
         if (savedInstanceState == null) {
-            var fragment = DetailMovieFragment.newInstance(intent.getParcelableExtra(ARG_MOVIE))
+            val movie: Movie = intent?.getParcelableExtra(ARG_MOVIE)!!
+            var fragment = DetailMovieFragment.newInstance(movie)
             supportFragmentManager.beginTransaction().add(R.id.movie_detail_container, fragment)
                 .commit()
         }
