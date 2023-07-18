@@ -13,7 +13,7 @@ class ViewModelFactory(application: Application, repository: MovieRepository) :
     private var mApplication = application
     private var mRepository: MovieRepository = repository
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchMoviesViewModel::class.java)) {
             return SearchMoviesViewModel(mApplication, mRepository) as T
         } else if (modelClass.isAssignableFrom(DetailMovieViewModel::class.java)) {
