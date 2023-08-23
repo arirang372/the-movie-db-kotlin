@@ -76,15 +76,15 @@ class MovieRemoteDataSource : DataSource {
         movieId: Long,
         callback: DataSource.LoadReviewsTrailersCallback
     ) {
-        Observable.zip(getMovieTrailers(movieId = movieId), getMovieReviews(movieId),
-            BiFunction<ApiResponse<Trailer>, ApiResponse<Review>, MutableList<Comparable<*>>> { trailers, reviews ->
-                var combinedList = mutableListOf<Comparable<*>>()
-                combinedList.add(Category("Video"))
-                combinedList.addAll(createTrailerUrls(trailers.results, movieId))
-                combinedList.add(Category("Reviews"))
-                combinedList.addAll(appendMovieIdsOnReviews(reviews.results, movieId))
-                combinedList
-            }).subscribe(object : Observer<MutableList<Comparable<*>>> {
+        Observable.zip(getMovieTrailers(movieId = movieId), getMovieReviews(movieId)
+        ) { trailers, reviews ->
+            var combinedList = mutableListOf<Comparable<*>>()
+            combinedList.add(Category("Video"))
+            combinedList.addAll(createTrailerUrls(trailers.results, movieId))
+            combinedList.add(Category("Reviews"))
+            combinedList.addAll(appendMovieIdsOnReviews(reviews.results, movieId))
+            combinedList
+        }.subscribe(object : Observer<MutableList<Comparable<*>>> {
             override fun onComplete() {
             }
 
