@@ -13,7 +13,7 @@ interface MovieDao {
     fun getMovies(): MutableList<Movie>
 
     @Query("SELECT * FROM movie WHERE id =:id")
-    fun getMovie(id: Long): Movie
+    fun getMovie(id: Long): Movie?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: Movie)
