@@ -4,9 +4,8 @@ import com.john.themoviedb.databinding.TitleListContentBinding
 import com.john.themoviedb.details.model.Category
 
 
-class TitleViewHolder(binding: TitleListContentBinding) : BaseViewHolder<Category>(binding.root) {
-    private val mBinding = binding
+class TitleViewHolder(private val binding: TitleListContentBinding) : BaseViewHolder<Category>(binding.root) {
     override fun bind(item: Category) {
-        mBinding.model = item
+        binding.model = item
     }
 }

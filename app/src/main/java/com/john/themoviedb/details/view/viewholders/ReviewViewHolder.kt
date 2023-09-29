@@ -7,24 +7,20 @@ import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 
 
 class ReviewViewHolder(
-    binding: ReviewListContentBinding,
-    viewModel: DetailMovieViewModel,
-    trailersReviews: MutableList<Comparable<*>>,
-    callback: MovieReviewItemListener
+    private val binding: ReviewListContentBinding,
+    private val viewModel: DetailMovieViewModel,
+    private val trailersReviews: MutableList<Comparable<*>>,
+    private val callback: MovieReviewItemListener
 ) : BaseViewHolder<Review>(binding.root) {
-    private var mTrailersReview = trailersReviews
-    private var mBinding = binding
-    private var mCallback = callback
-    private var mViewModel = viewModel
     override fun bind(item: Review) {
-        mBinding.model = item
-        mBinding.callback = object : MovieReviewItemListener {
+        binding.model = item
+        binding.callback = object : MovieReviewItemListener {
             override fun onReviewClicked(review: Review) {
                 if (adapterPosition < 0) return
-                val review = mTrailersReview[adapterPosition] as Review
-                mCallback.onReviewClicked(review)
+                val review = trailersReviews[adapterPosition] as Review
+                callback.onReviewClicked(review)
             }
         }
-        mBinding.viewModel = mViewModel
+        binding.viewModel = viewModel
     }
 }

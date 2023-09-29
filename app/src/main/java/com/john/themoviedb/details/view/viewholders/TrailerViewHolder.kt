@@ -7,25 +7,21 @@ import com.john.themoviedb.details.viewmodel.DetailMovieViewModel
 
 
 class TrailerViewHolder(
-    binding: TrailerListContentBinding,
-    viewModel: DetailMovieViewModel,
-    trailersReviews: MutableList<Comparable<*>>,
-    callback: MovieTrailerItemListener
+    private val binding: TrailerListContentBinding,
+    private val viewModel: DetailMovieViewModel,
+    private val trailersReviews: MutableList<Comparable<*>>,
+    private val callback: MovieTrailerItemListener
 ) :
     BaseViewHolder<Trailer>(binding.root) {
-    private var mTrailersReviews: MutableList<Comparable<*>> = trailersReviews
-    private val mBinding = binding
-    private val mCallback = callback
-    private var mViewModel = viewModel
     override fun bind(item: Trailer) {
-        mBinding.model = item
-        mBinding.callback = object : MovieTrailerItemListener {
+        binding.model = item
+        binding.callback = object : MovieTrailerItemListener {
             override fun onTrailerItemClicked(trailer: Trailer) {
                 if (adapterPosition < 0) return
-                val trailer: Trailer = mTrailersReviews[adapterPosition] as Trailer
-                mCallback.onTrailerItemClicked(trailer)
+                val trailer: Trailer = trailersReviews[adapterPosition] as Trailer
+                callback.onTrailerItemClicked(trailer)
             }
         }
-        mBinding.viewModel = mViewModel
+        binding.viewModel = viewModel
     }
 }
